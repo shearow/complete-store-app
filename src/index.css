@@ -1,0 +1,48 @@
+html {
+  box-sizing: border-box;
+  font-size: 62.5%; /* 1rem = 10px */
+  font-family: sans-serif;
+  scroll-behavior: smooth;
+  background-color: rgb(203, 101, 101);
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-size: 1.6rem;
+}
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+a {
+  text-decoration: none;
+  color: #000;
+}
+li {
+  list-style-type: none;
+}
+button,
+textarea,
+input {
+  outline: none;
+}
+
+/* Utilities */
+.container {
+  margin: 0 auto;
+  width: 95%;
+  max-width: 120rem;
+}
+.title-page {
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 3rem;
+}
+
+/* */

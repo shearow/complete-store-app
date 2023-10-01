@@ -1,0 +1,108 @@
+.login-section .login-form {
+    background-color: burlywood;
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    max-width: 60rem;
+    margin: 0 auto;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.312);
+}
+.login-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.login-form .login-data-input {
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 480px){
+    .login-form .login-data-input {
+        flex-direction: row;
+        gap: .5rem;
+        align-items: center;
+    }
+}
+.login-data-input label {
+    font-weight: bold;
+}
+@media (min-width: 480px){
+    .login-data-input label {
+        width: 9rem;
+        text-align: center;
+    }
+}
+.login-data-input input {
+    padding: .5rem;
+    flex-grow: 1;
+    font-weight: bold;
+}
+.login-form .login-submit {
+    padding: .8rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: .5rem;
+    color: #ffffff; 
+    text-shadow: 0 0 1rem #000000;
+    background-color: rgba(165, 42, 42, 0.653);
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.178);
+    transition: background-color .3s ease-in-out, filter .3s ease-in-out, color .3s ease;
+}
+.login-form .login-submit:hover {
+    filter: brightness(1.5);
+    box-shadow: 0 0 1rem rgba(165, 42, 42, 0.589);
+    color: #000;
+}
+.login-form .login-form-more-options {
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+    margin-top: 1rem;
+}
+.login-form .login-form-more-options p {
+    font-weight: bold;
+    text-align: center;
+}
+.login-form .login-form-more-options a {
+    text-decoration: underline;
+    color: brown;
+    font-size: 1.8rem;
+    text-shadow: 0 0 1rem rgba(0, 0, 0, 0.371);
+    letter-spacing: .05rem;
+    text-transform: uppercase;
+    transition: color .3s ease, box-shadow .3s ease, color .3s ease;
+}
+.login-form .login-form-more-options a:hover {
+    text-shadow: 0 0 2rem brown;
+    color: #000;
+}
+.login-form .login-others-providers {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.login-form .login-provider {
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+    background-color: #000000;
+    padding: .5rem 1rem;
+    border-radius: 1rem;
+    color: #ffffff;
+    cursor: pointer;
+    transition: filter .3s ease, color .3s ease, box-shadow .3s ease;
+}
+.login-form .login-provider:hover {
+    filter: brightness(1.5);
+    color: brown;
+    box-shadow: 0 0 1rem .1rem rgba(165, 42, 42, 0.38);
+}
+.login-form .login-provider img {
+    width: 3rem;
+}

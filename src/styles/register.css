@@ -1,0 +1,101 @@
+.register-form {
+    background-color: burlywood;
+    padding: 2rem 1.5rem;
+    border-radius: 1rem;
+    max-width: 60rem;
+    margin: 0 auto;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.312);
+}
+.register-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.register-form .form-data-input {
+    display: flex;
+    flex-direction: column;
+}
+@media (min-width: 480px){
+    .register-form .form-data-input {
+        flex-direction: row;
+        gap: .5rem;
+        align-items: center;
+    }
+}
+.form-data-input label {
+    font-weight: bold;
+}
+@media (min-width: 480px){
+    .form-data-input label {
+        width: 9rem;
+        text-align: center;
+    }
+}
+.form-data-input input {
+    padding: .5rem;
+    flex-grow: 1;
+    font-weight: bold;
+}
+.form-data.active input {
+    background-color: rgba(210, 88, 88, 0.346);
+}
+.form-data .form-error-data {
+    color: rgb(236, 17, 17);
+    font-weight: bold;
+    display: block;
+    background-color: black;
+    text-shadow: 0 0 1rem rgba(133, 134, 129, 0.831);
+    height: 0;
+    width: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+.form-data.active .form-error-data {
+    height: initial;
+    width: initial;
+    opacity: 1;
+    padding: .5rem;
+    margin: .5rem 0 1rem 0;
+    transition: opacity .3s ease;
+}
+.register-form .form-terms {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+@media (min-width: 480px){
+    .register-form .form-terms {
+        margin-left: 10rem;
+    }
+}
+.register-form .form-terms input {
+    width: 1.5rem;
+    height: 1.5rem;
+    cursor: pointer;
+}
+.register-form .form-terms p {
+    font-weight: bold;
+}
+.register-form .form-terms a {
+    text-decoration: underline;
+    color: rgb(34, 34, 216);
+}
+.register-form .form-submit {
+    padding: .8rem 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: .5rem;
+    color: #ffffff; 
+    text-shadow: 0 0 1rem #000000;
+    background-color: rgba(165, 42, 42, 0.653);
+    border: none;
+    border-radius: .5rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.178);
+    transition: background-color .3s ease-in-out, filter .3s ease-in-out, color .3s ease;
+}
+.register-form .form-submit:hover {
+    filter: brightness(1.5);
+    box-shadow: 0 0 1rem rgba(165, 42, 42, 0.589);
+    color: #000;
+}
