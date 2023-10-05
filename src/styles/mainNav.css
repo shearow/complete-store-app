@@ -140,7 +140,7 @@
     height: 6rem;
     width: 6rem;
     margin: 0 auto;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
     border: .2rem solid orange;
     cursor: pointer;

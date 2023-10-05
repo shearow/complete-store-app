@@ -1,0 +1,16 @@
+.edit-profile-container {
+    background-color: brown;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem .1rem #0000003d;
+}
+.edit-profile-container .menu-edit-option {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+.menu-edit-option img {
+    filter: drop-shadow(0 0 1rem yellow);
+}

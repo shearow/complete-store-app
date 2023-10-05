@@ -1,20 +1,26 @@
 import { createContext, useState, useEffect } from "react"
-import { getUserIdData, signOutUserOnline } from "../services/authService"
+import { signOutUserOnline } from "../services/authService"
 import { onAuthStateChanged } from "firebase/auth"
 import { auth } from "../config/firebase"
 import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
+import { doc, onSnapshot } from "firebase/firestore"
+import { db } from "../config/firebase"
 
 /********************* TYPESCRIPT TYPES *****************************************/
 interface UserOnline {
     id: string,
-    displayName?: string,
-    email?: string,
+    displayName: string,
+    email: string,
     imgURL: string,
     role: string,
     online: boolean
 }
-/*******************************************************************************/
 
+interface UserContextType {
+    userOnline: UserOnline,
+    removeUserOnline?: () => Promise<void>,
+}
+/*************************************************************/
 const initialUserOnline = {
     id: "",
     displayName: "",
@@ -25,37 +31,36 @@ const initialUserOnline = {
 }
 
 /* Context */
-export const UserContext = createContext(null);
+export const UserContext = createContext<UserContextType>({userOnline: initialUserOnline});
 
+/************************************************************/
 /* Provider */
 export const UserProvider = ( {children}: {children: JSX.Element} ) => {
     const [userOnline, setUserOnline] = useState<UserOnline>(initialUserOnline);
 
-    useEffect(() => {
-        const unsub = onAuthStateChanged(auth, (user) =>{
+    useEffect(() => { 
+        const unsub = onAuthStateChanged(auth, (user) => {
             if(user){
-                getUserIdData(user.uid).then(userOn => {
-                    if(userOn.exists()){
-                        const {displayName,email,imgURL,role} = userOn.data()
+                const userDataRef = doc(db, "users", user.uid)
+                const unsub2 = onSnapshot(userDataRef, (doc) => {
+                    const {displayName, email, imgURL, role} = doc.data() as UserOnline;
 
-                        setUserOnline({
-                            id: user.uid,
-                            displayName,
-                            email,
-                            imgURL,
-                            role,
-                            online: true
-                        });
-                    }
-                });
+                    setUserOnline({
+                        id: doc.id,
+                        displayName,
+                        email,
+                        imgURL: imgURL || URL_IMG_PROFILE_DEFAULT,
+                        role,
+                        online: true
+                    })
+                })
+                return () => unsub2();
+            }else {
+                removeUserOnline();
             }
         });
         return () => unsub();
     }, []);
-
-    const onlineWaitingData = (online: boolean) => {
-        setUserOnline(prevState => ( {...prevState, online} ));
-    }
 
     const removeUserOnline = async () => {
         try{
@@ -67,7 +72,7 @@ export const UserProvider = ( {children}: {children: JSX.Element} ) => {
     };
 
     return (
-        <UserContext.Provider value={ { userOnline, removeUserOnline, onlineWaitingData } }>
+        <UserContext.Provider value={ { userOnline, removeUserOnline } } >
             { children }
         </UserContext.Provider>
     )

@@ -1,0 +1,77 @@
+.user-change-image-section .user-change-image-content {
+    background-color: brown;
+    border-radius: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.user-change-image-content .user-change-image-img {
+    width: 90%;
+}
+.user-change-image-img img {    
+    width: 25rem;
+    height: 25rem;
+    object-fit: cover;
+    border: .2rem solid orange;
+    margin: 0 auto;
+}
+@media (min-width: 480px){
+    .user-change-image-img img {
+        width: 30rem;
+        height: 30rem;
+    }
+}
+.user-change-image-content input {
+    display: none;
+}
+.user-change-image-content .btns-changes {
+    padding: 1rem 2rem;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: filter .3s ease;
+}
+.user-change-image-content .btns-changes:hover {
+    filter: brightness(1.5);
+}
+.user-change-image-content .btn-change-image {
+    background-color: orange;
+    margin-top: 1rem;
+}
+.user-change-image-content .btns-changes-options {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+@media (min-width: 768px){
+    .user-change-image-content .btns-changes-options {
+        flex-direction: row;
+    }
+}
+.btns-changes-options .btns-changes {
+    width: 100%;
+}
+@media (min-width: 768px){
+    .btns-changes-options .btns-changes {
+        width: 30%;
+    }
+}
+.btns-changes-options .btn-cancel-changes {
+    background-color: red;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #ffffff;
+    box-shadow: 0 0 1rem red;
+}
+.btns-changes-options .btn-save-changes {
+    background-color: green;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #ffffff;
+    box-shadow: 0 0 1rem green;
+}

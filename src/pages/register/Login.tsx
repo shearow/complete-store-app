@@ -1,18 +1,14 @@
-import { useContext } from "react"
 import { Link } from "react-router-dom"
 import googleIcon from "../../assets/icons/google.svg"
-import { UserContext } from "../../context/userContext"
 import "../../styles/login.css"
 import { loginWithGoogleService, createUserDBService, loginUserService } from "../../services/authService"
 /********************* TYPESCRIPT TYPES *****************************************/
 import { CreateUserDBService } from "../../types/AuthServiceTypes"
 
 export const Login = () => {
-    const {onlineWaitingData} = useContext(UserContext);
 
     const loginGoogle = async () => {
         try{
-            onlineWaitingData(true);
             await loginWithGoogleService()
             .then(userData => {
                 createUserDBService( {
@@ -25,7 +21,6 @@ export const Login = () => {
             })
         }catch(err){
             alert("An error has ocurred.");
-            onlineWaitingData(false);
         }
     }
 
@@ -33,14 +28,12 @@ export const Login = () => {
         e.preventDefault();
 
         try{
-            onlineWaitingData(true);
             await loginUserService({
                 email: e.target.loginEmail.value, 
                 password: e.target.loginPassword.value
             });
         }catch(err){
             alert("Incorrect Password");
-            onlineWaitingData(false);
         }
     }
 

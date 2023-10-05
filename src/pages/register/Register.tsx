@@ -2,13 +2,7 @@ import { useState, useEffect } from "react"
 import "../../styles/register.css"
 import { Link } from "react-router-dom"
 import { createUserService } from "../../services/authService"
-
-const REGEX_AUTH = {
-    userName: /^[a-zA-Z0-9]{1,20}$/,
-    email: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/,
-    password: /^[A-Za-z0-9]{6,30}$/,
-    repeatPassword: /^[A-Za-z0-9]{6,30}$/,
-}
+import { REGEX_AUTH } from "../../const/dataConst"
 
 const initialUserData = {
     userName: "",

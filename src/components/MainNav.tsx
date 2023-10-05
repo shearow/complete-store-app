@@ -2,8 +2,8 @@ import { Link, NavLink } from "react-router-dom"
 import { useContext, useState } from "react"
 import { UserContext } from "../context/userContext"
 import logoShearow from "../assets/imgs/logo-ave.svg"
-import openBurger from "../assets/icons/open-burger.svg"
-import closeBurger from "../assets/icons/close-burger.svg"
+import openBurger from "../assets/icons/burgerIcons/open-burger.svg"
+import closeBurger from "../assets/icons/burgerIcons/close-burger.svg"
 import "../styles/mainNav.css"
 
 export const MainNav = () => {
@@ -40,6 +40,7 @@ export const MainNav = () => {
                 <ul>
                     <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/">Home</NavLink></li>
                     <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/about">About</NavLink></li>
+                    <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/shopp">Shopp</NavLink></li>
                     
                     { !userOnline?.online
                     ? (
