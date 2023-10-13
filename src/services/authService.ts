@@ -1,8 +1,9 @@
 import { auth, db, googleProvider, storage } from "../config/firebase"
 import { signOut, sendPasswordResetEmail, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword, User } from "firebase/auth"
-import { doc, getDocs, setDoc, updateDoc, query, where, collection, getDoc } from "firebase/firestore"
+import { doc, getDocs, setDoc, updateDoc, query, where, collection, getDoc, addDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
+import { v4 } from "uuid";
 /********************* TYPESCRIPT TYPES *****************************************/
 import { CreateUserService, CreateUserDBService } from "../types/AuthServiceTypes"
 /********************************************************************************/
@@ -97,4 +98,79 @@ export const takeProductService = async ( {idProduct}: {idProduct: string} ) => 
     const dataRef = doc(db, "products", idProduct);
 
     return await getDoc(dataRef);
+}
+
+export const createProductService = async ( {
+    available,
+    category,
+    description,
+    discountPercentage,
+    name,
+    images,
+    price,
+    stock,
+    thumbnail
+} ) => {
+    const productRef = collection(db, "products");
+
+    let dataThumbnail: string;
+    let dataImages: string[] = [];
+
+    try{
+        await addDoc(productRef, {
+            available,
+            category,
+            description,
+            discountPercentage,
+            name,
+            price,
+            stock,
+        }).then(async createdProduct => {
+
+            /* IF CATEGORY NOT EXIST, CREATE CATEGORY */
+            const itemRef = collection(db, "categories");
+
+            category.forEach(async categoryItem => {
+                const q = query(itemRef, where("category", "==", categoryItem)); 
+
+                await getDocs(q).then(async categoryData => {
+                    if(categoryData.empty){
+                        await addDoc(itemRef, {
+                            category: categoryItem
+                        });
+                    }
+                });
+            })
+
+            /* CREATE THUMBNAIL IN STORAGE. */
+            const storageProductRef = ref(storage, `/products/${createdProduct.id}/thumbnail.jpg`);
+
+            await uploadBytes(storageProductRef, thumbnail).then(async fileData => {
+                await getDownloadURL(fileData.ref).then(data => {
+                    dataThumbnail = data;
+                });
+            });
+            
+            /* CREATE IMAGES IN STORAGE */
+            for(let i=0; i < images.length; i++){
+                const storageProductRef2 = ref(storage, `/products/${createdProduct.id}/${v4()+v4()}.jpg`);
+
+                await uploadBytes(storageProductRef2, images[i]).then(async fileData => {
+                    await getDownloadURL(fileData.ref).then(data => {
+                        dataImages = [...dataImages, data];
+                    });
+                });
+            }
+            
+            /* ADD IMAGES UPLOADEDS IN PRODUCT */
+            const productRef = doc(db, "products", createdProduct.id);
+
+            await setDoc(productRef, {
+                thumbnail: dataThumbnail,
+                images: dataImages
+            }, {merge: true});
+        });
+    }catch(err){
+        console.log(err);
+    }
 }

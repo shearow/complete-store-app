@@ -42,7 +42,8 @@ export const useTakeProducts = (
         try{
             const categoriesData = await getDocs(categoriesRef);
             const categoriesArray = categoriesData.docs.map(category => category.data().category);
-            setAllCategories( [ALL_PRODUCTS, ...categoriesArray] );
+            console.log(categoriesArray)
+            setAllCategories( [...categoriesArray] );
         }catch(err){
             console.log(err);
         }
