@@ -5,7 +5,7 @@ export const GoBackButton = ( {
     navigateTo = "/",
     textProp = '👈 Go back',
     classNameProp = 'go-back-button'
-}: GoBackButtonType) => {
+}: GoBackButtonType ) => {
 
     const navigate = useNavigate();
 

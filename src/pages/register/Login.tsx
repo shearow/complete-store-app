@@ -4,6 +4,7 @@ import "../../styles/login.css"
 import { loginWithGoogleService, createUserDBService, loginUserService } from "../../services/authService"
 /********************* TYPESCRIPT TYPES *****************************************/
 import { CreateUserDBService } from "../../types/AuthServiceTypes"
+import { GoBackButton } from "../../components/GoBackButton"
 
 export const Login = () => {
 
@@ -39,6 +40,7 @@ export const Login = () => {
 
     return (
         <div className="login-section container">
+            <GoBackButton />
             <h2 className="title-page">Login Page</h2>
 
             <div className="login-form">

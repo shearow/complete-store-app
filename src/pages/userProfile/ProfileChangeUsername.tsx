@@ -1,8 +1,7 @@
 import { useRef, useContext } from "react"
 import { UserContext } from "../../context/userContext"
-import { MENU_EDIT_PROFILE } from "../../const/dataConst"
-import { REGEX_AUTH } from "../../const/dataConst"
 import { changeUserNameService } from "../../services/authService"
+import { MENU_EDIT_PROFILE, REGEX_AUTH } from "../../const/dataConst"
 
 export const ProfileChangeUsername = ( {changeMenu}: {changeMenu: (section: string) => void} ) => {
     const {userOnline} = useContext(UserContext);

@@ -1,7 +1,6 @@
 import { useRef } from "react"
-import { MENU_EDIT_PROFILE } from "../../const/dataConst"
 import { userChangeNewPasswordService } from "../../services/authService"
-import { REGEX_AUTH } from "../../const/dataConst"
+import { MENU_EDIT_PROFILE, REGEX_AUTH } from "../../const/dataConst"
 
 export const ProfileChangePassword = ( {changeMenu}: {changeMenu: (section: string) => void} ) => {
     const dataPasswordRef = useRef(null);

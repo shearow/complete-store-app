@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { ProfileChangeUsername } from "./ProfileChangeUsername"
 import { ProfileChangePassword } from "./ProfileChangePassword"
-import { MENU_EDIT_PROFILE } from "../../const/dataConst"
 import { MenuEditProfile } from "./MenuEditProfile"
+import { MENU_EDIT_PROFILE } from "../../const/dataConst"
 import "../../styles/userEditProfile.css"
 
 export const UserEditProfile = () => {

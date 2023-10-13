@@ -20,8 +20,8 @@ export const UserProfile = () => {
                             <img src={userOnline.imgURL} alt={`image profile to ${userOnline.displayName}`} />
                         </Link>
                     </div>
-                    <h3>{userOnline.displayName}</h3>
-                    <button onClick={removeUserOnline}>Logout</button>
+                    <h3 className="profile-username">{userOnline.displayName}</h3>
+                    <button className="profile-logout" onClick={removeUserOnline}>Logout</button>
                 </div>
 
                 <div className="profile-options">

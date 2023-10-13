@@ -1,5 +1,6 @@
-import { ShoppProductType } from "../../types/ShoppTypes"
 import { ShoppProduct } from "./ShoppProduct"
+/********************* TYPESCRIPT TYPES *****************************************/
+import { ShoppProductType } from "../../types/ShoppTypes"
 
 export const ShoppListProducts = ( {allProducts}: {allProducts: ShoppProductType[]} ) => {
     return (

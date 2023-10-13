@@ -15,3 +15,21 @@ export const REGEX_AUTH = {
 }
 
 export const MAX_COUNT_MINIATURES = 7;
+
+export const PRIVATE_OPTION = {
+    onlyLogged: "onlyUsers",
+    onlyNotLogged: "onlyNotLogged",
+    onlyAdmin: "onlyAdmin"
+}
+
+export const SECTION_ADMIN_ON = {
+    home: "home",
+    products: "products",
+    users: "users"
+}
+
+export const ALL_PRODUCTS = "all";
+
+export const INITIAL_MIN_PRICE = 0;
+
+export const INITIAL_MAX_PRICE = 1000000000;

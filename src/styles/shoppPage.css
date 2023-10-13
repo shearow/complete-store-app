@@ -1,0 +1,87 @@
+.shopp-page-section .shopp-list-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 250px);
+    justify-content: center;
+    gap: 2rem;
+}
+@media (min-width: 480px){
+    .shopp-page-section .shopp-list-products {        
+        justify-content: initial;
+    }
+}
+.shopp-list-products .product-container {
+    background-color: burlywood;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.298);
+    animation: animationCard .3s alternate;
+}
+@keyframes animationCard {
+    0%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 1;
+    }
+}
+.shopp-list-products .product-container .product-content {
+    display: block;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.product-container .product-content .product-title,
+.product-content .product-description {
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: center;
+    text-transform: capitalize;
+}
+.product-content .product-image-container {
+    width: 100%;
+    height: 20rem;
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 0 1rem .1rem rgba(165, 42, 42, 0.35);
+}
+.product-content .product-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-content .product-image-container .product-discount {
+    position: absolute;
+    top: 0;
+    background-color: #2a852a;
+    padding: 1rem;
+    border-radius: 0 0 1rem 0;
+    color: #000000;
+    font-weight: bold;
+    box-shadow: 0 0 1rem .1rem #2a852a;
+}
+.product-content .product-footer {
+    background-color: brown;
+    color: burlywood;
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    text-align: center;
+}
+.product-footer .product-description {
+    margin-bottom: .5rem;
+    color: #ffffff;
+}
+.product-footer .product-price {
+    font-weight: bold;
+    text-shadow: 0 0 1rem black;
+    font-size: 2.2rem;
+    padding: .5rem 0;
+}
+.product-footer .product-price-discount {
+    background: linear-gradient(45deg, transparent, #2a852a, burlywood);
+    border-radius: 0 1rem 1rem 0;
+}

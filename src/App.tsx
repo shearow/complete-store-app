@@ -1,9 +1,9 @@
-import { MainRoute } from "./routes/MainRoute"
+import { RoutesLonely } from "./routes/RoutesLonely"
 
 function App() {
   return (
     <>
-      <MainRoute />
+      <RoutesLonely />
     </>
   )
 }

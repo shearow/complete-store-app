@@ -1,7 +1,7 @@
-import { MENU_EDIT_PROFILE } from "../../const/dataConst"
 import changeProfileIcon from "../../assets/icons/profileIcons/change-profile.png"
 import changePasswordIcon from "../../assets/icons/profileIcons/change-password.png"
 import { GoBackButton } from "../../components/GoBackButton"
+import { MENU_EDIT_PROFILE } from "../../const/dataConst"
 
 export const MenuEditProfile = ( {changeMenu}: {changeMenu: (section: string) => void} ) => {
     return (

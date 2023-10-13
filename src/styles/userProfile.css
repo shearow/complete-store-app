@@ -1,5 +1,5 @@
 .user-profile-section .profile-header {
-    background-color: brown;
+    background: linear-gradient(0deg,burlywood, #c58736, brown);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -28,6 +28,8 @@
     overflow: hidden;
     margin: 0 auto;
     position: relative;
+    border: .5rem solid orange;
+    box-shadow: 0 0 2rem 0.1rem #00000082;
 }
 @media (min-width: 480px){
     .profile-header .profile-image {
@@ -57,14 +59,32 @@
     0% { opacity: 0; }
     100% {opacity: 1; }
 }
-.profile-data .profile-header h3 {
-    color: #ffffff;
+.profile-data .profile-header .profile-username {
+    color: brown;
     text-align: center;
+    text-shadow: 0 0 1rem burlywood;
+}
+.profile-data .profile-header .profile-logout {
+    width: 100%;
+    padding: .7rem 0;
+    font-size: 2rem;
+    border-radius: 1rem;
+    border: none;
+    background-color: brown;
+    color: burlywood;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.371);
+    cursor: pointer;
+    transition: filter .3s ease;
+}
+.profile-data .profile-header .profile-logout:hover {
+    filter: brightness(2);
 }
 .profile-data .profile-options {
     background-color: brown;
     border-radius: 1rem;
-    padding: 1rem;
+    padding: 2rem;
 }
 .profile-data .profile-options .title-options {
     font-size: 2.5rem;

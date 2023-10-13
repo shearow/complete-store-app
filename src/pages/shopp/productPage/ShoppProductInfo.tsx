@@ -2,13 +2,13 @@ import { useState, useEffect } from "react"
 import { useParams } from "react-router-dom"
 import { GoBackButton } from "../../../components/GoBackButton"
 import { takeProductService } from "../../../services/authService"
-import { ShoppProductType } from "../../../types/ShoppTypes"
 import { Spinner } from "../../../components/Spinner"
 import { Error404 } from "../../../routes/Error404"
 import { ProductMainData } from "./ProductMainData"
-import { ProductMainDataType } from "../../../types/ShoppTypes"
 import { ProductAllImages } from "./ProductAllImages"
 import "../../../styles/shoppProductInfo.css"
+/********************* TYPESCRIPT TYPES *****************************************/
+import { ShoppProductType } from "../../../types/ShoppTypes"
 
 export const ShoppProductInfo = () => {
     const [product, setProduct] = useState<ShoppProductType>();
@@ -54,10 +54,17 @@ export const ShoppProductInfo = () => {
                             price: product.price,
                             stock: product.stock,
                             id: product.id
-                        } as ProductMainDataType 
+                        }
                     }/>
 
                     <ProductAllImages allImages={[product.thumbnail, ...product.images]} />
+                </div>
+
+                <div className="product-description-content">
+                    <div className="product-description container">
+                        <h3>Description:</h3>
+                        <p>{product.description}</p>                    
+                    </div>
                 </div>
             </div>
             }

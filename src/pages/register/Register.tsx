@@ -3,6 +3,7 @@ import "../../styles/register.css"
 import { Link } from "react-router-dom"
 import { createUserService } from "../../services/authService"
 import { REGEX_AUTH } from "../../const/dataConst"
+import { GoBackButton } from "../../components/GoBackButton"
 
 const initialUserData = {
     userName: "",
@@ -65,6 +66,7 @@ export const Register = () => {
 
     return (
         <div className="register-section container">
+            <GoBackButton />
             <h2 className="title-page">Register Page</h2>
 
             <div className="register-form">

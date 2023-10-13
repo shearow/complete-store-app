@@ -9,7 +9,7 @@ export interface ShoppProductType {
     price: number,
     stock: number,
     thumbnail: string,
-    id?: string
+    id: string
 }
 
 export interface ProductMainDataType {

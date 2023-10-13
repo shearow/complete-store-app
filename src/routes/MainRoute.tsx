@@ -1,19 +1,17 @@
-import { Routes, Route } from "react-router-dom";
-import { HomePage } from "../pages/HomePage";
-import { AboutPage } from "../pages/AboutPage";
-import { MainNav } from "../components/MainNav";
-import { Login } from "../pages/register/Login";
-import { Register } from "../pages/register/Register";
-import { Error404 } from "./Error404";
-import { TermsConditions } from "../pages/register/TermsConditions";
-import { RecoverPassword } from "../pages/register/RecoverPassword";
-import { UserProfile } from "../pages/userProfile/UserProfile";
-import { RoutesNotAllowedWithUserOn } from "./PrivateRoutes";
-import { RoutesAllowedWithUserOn } from "./PrivateRoutes";
-import { UserEditProfile } from "../pages/userProfile/UserEditProfile";
-import { UserChangeImage } from "../pages/userProfile/UserChangeImage";
-import { ShoppPage } from "../pages/shopp/ShoppPage";
-import { ShoppProductInfo } from "../pages/shopp/productPage/ShoppProductInfo";
+import { Routes, Route } from "react-router-dom"
+import { MainNav } from "../components/MainNav"
+import { HomePage } from "../pages/HomePage"
+import { AboutPage } from "../pages/AboutPage"
+import { TermsConditions } from "../pages/register/TermsConditions"
+import { RecoverPassword } from "../pages/register/RecoverPassword"
+import { UserProfile } from "../pages/userProfile/UserProfile"
+import { UserEditProfile } from "../pages/userProfile/UserEditProfile"
+import { UserChangeImage } from "../pages/userProfile/UserChangeImage"
+import { ShoppPage } from "../pages/shopp/ShoppPage"
+import { ShoppProductInfo } from "../pages/shopp/productPage/ShoppProductInfo"
+import { Error404 } from "./Error404"
+import { PrivateRoutes } from "./PrivateRoutes"
+import { PRIVATE_OPTION } from "../const/dataConst"
 
 export const MainRoute = () => {
     return (
@@ -22,12 +20,8 @@ export const MainRoute = () => {
 
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route element={<RoutesNotAllowedWithUserOn />}>
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                </Route>
-                <Route element={<RoutesAllowedWithUserOn />}>
+                <Route path="/about" element={<AboutPage />} />                
+                <Route element={<PrivateRoutes option={PRIVATE_OPTION.onlyLogged} />}>
                     <Route path="/userprofile" element={<UserProfile />} />
                     <Route path="/userprofile/usereditprofile" element={<UserEditProfile />} />
                     <Route path="/userprofile/changeimage" element={<UserChangeImage />} />

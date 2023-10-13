@@ -1,18 +1,19 @@
 import { useState } from "react"
+/********************* TYPESCRIPT TYPES *****************************************/
 import { ProductMainDataType } from "../../../types/ShoppTypes"
 
 export const ProductMainData = ( {product}: {product: ProductMainDataType} ) => {
     const [stockCount, setStockCount] = useState(1);
 
-    const increaseStockCount = () => {
-        if(stockCount < product.stock){
-            setStockCount(prev => prev + 1);
-        }
-    }
-
     const reduceStockCount = () => {
         if(stockCount > 1){
             setStockCount(prev => prev - 1);
+        }
+    }
+
+    const increaseStockCount = () => {
+        if(stockCount < product.stock){
+            setStockCount(prev => prev + 1);
         }
     }
 
@@ -37,8 +38,8 @@ export const ProductMainData = ( {product}: {product: ProductMainDataType} ) => 
                         <label>Quantity:</label>
                         <div className="stock-input-content">
                             <input type="text" value={stockCount} readOnly />
-                            <button className="button-stock" onClick={increaseStockCount}>+</button>
                             <button className="button-stock" onClick={reduceStockCount}>-</button>
+                            <button className="button-stock" onClick={increaseStockCount}>+</button>
                         </div>                        
                     </div>
                     <div className="product-buy">

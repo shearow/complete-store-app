@@ -11,7 +11,7 @@ export const UserChangeImage = () => {
     const navigate = useNavigate();
 
     const toFileInput = () => {
-        inputFileRef.current.click();
+        inputFileRef?.current?.click();
     }
 
     const changeImage = (e) => {

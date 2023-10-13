@@ -43,20 +43,21 @@ export const MainNav = () => {
                     <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/shopp">Shopp</NavLink></li>
                     
                     { !userOnline?.online
-                    ? (
-                    <>
+                    ? <>
                     <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/login">Login</NavLink></li>
                     <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/register">Register</NavLink></li>
-                    </> )
-                    : (                
-                    <>
+                    </>
+                    : <>
                     <li className="nav-user-img">
                         <Link to="/userprofile">
                             <img src={userOnline?.imgURL} alt={`image profile to ${userOnline?.displayName}`} />
                         </Link>
                     </li>
+                    { userOnline.online && userOnline.role === "admin" 
+                    && <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/admin/menu">👑ADMIN</NavLink></li>
+                    }
                     <li onClick={removeUserOnline}>Logout</li>
-                    </>) }
+                    </> }
                 </ul>
             </nav>            
         </div>

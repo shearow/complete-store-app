@@ -1,0 +1,444 @@
+/***** NAVBAR ADMIN *****/
+@media (min-width: 768px){    
+    .admin-menu-section {
+        display: flex;
+    }
+}
+.admin-menu-section .admin-menu-section-container {
+    overflow: hidden;
+}
+@media (min-width: 768px){
+    .admin-menu-section .admin-menu-section-container {
+        flex-grow: 1;
+    }
+}
+.navbar-admin {
+    background-color: orange;
+    padding: 1rem;
+}
+.navbar-admin .navbar-admin-title {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+    height: 4rem;
+}
+.navbar-admin .navbar-admin-title img {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    opacity: 1;
+    pointer-events: initial;
+}
+.navbar-admin .navbar-admin-title img.active {
+    opacity: 0;
+    pointer-events: none;
+}
+.admin-menu-section .navbar-admin-nav {
+    background-color: brown;
+    position: fixed;
+    top: 0;
+    left: -25rem;
+    height: 100vh;
+    padding: 1rem 0;
+    width: 25rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.469);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    flex-shrink: 0;
+    z-index: 400;
+}
+@media (min-width: 768px){ 
+    .admin-menu-section .navbar-admin-nav {
+        position: fixed;
+        left: -25rem;
+    }
+}
+.admin-menu-section.active .navbar-admin-nav {  
+    left: 0;
+    animation: animatedMenuAdminOpen .5s alternate;
+}
+@keyframes animatedMenuAdminOpen {
+    0% {
+        left: -25rem;
+    }
+    100% {
+        left: 0;
+    }
+}
+@media (min-width: 768px){    
+    .admin-menu-section.active .navbar-admin-nav {
+        position: sticky;
+    }
+}
+.navbar-admin-nav .navbar-admin-nav-header {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.navbar-admin-nav .navbar-admin-nav-header img {
+    width: 3rem;
+    height: 3rem;
+    align-self: flex-end;
+    margin: 0 1rem 2rem 0;
+    cursor: pointer;
+}
+.navbar-admin-nav .navbar-admin-nav-header {
+    border-bottom: .1rem solid orange;
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+.navbar-admin-nav-options {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+}
+.navbar-admin-nav-options ul {
+    display: flex;
+    flex-direction: column;
+}
+.navbar-admin-nav-option {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .5rem 0 .5rem .5rem;
+    cursor: pointer;
+    transition: background-color .3s ease;
+}
+.navbar-admin-nav-option:hover img {
+    filter: drop-shadow(0 0 1rem orange)
+}
+.navbar-admin-nav-option:hover p {
+    color: #000000;
+}
+.navbar-admin-nav-option.active {
+    background-color: orange;
+}
+.navbar-admin-nav-option img {
+    width: 2rem;
+    height: 2rem;
+}
+.navbar-admin-nav-option p {
+    color: #ffffff;
+    transition: color .3s ease;
+    font-weight: bold;
+    text-shadow: 0 0 1rem #000000;
+}
+.navbar-admin-nav-option-logout {
+    padding: 1rem 0;
+    text-transform: uppercase;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: burlywood;
+    border-radius: 1rem;
+    width: 80%;
+    margin: 2rem auto 0 auto;
+    transition: filter .3s ease;
+}
+.navbar-admin-nav-option-logout:hover {
+    filter: brightness(1.3);
+    box-shadow: 0 0 1rem .1rem burlywood;
+}
+
+
+
+
+/***** ProductsAdmin.tsx *****/
+.products-admin-section-content {
+    background-color: brown;
+    border-radius: 1rem;
+    padding: 2rem;
+}
+.products-admin-section-content .products-admin-header {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.products-admin-header .create-products {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: orange;
+    border: none;
+    display: flex;
+    align-items: center;
+    align-self: flex-end;
+    gap: .8rem;
+    box-shadow: 0 0 1rem .1rem rgba(255, 166, 0, 0.555);
+    cursor: pointer;
+    width: fit-content;
+    transition: filter .3s ease;
+}
+.products-admin-header .create-products:hover {
+    filter: brightness(1.5);
+}
+.products-admin-header .create-products img {
+    width: 3rem;
+}
+.products-admin-header .create-products p {
+    font-weight: bold;
+    font-size: 1.8rem;
+    text-transform: uppercase;
+}
+
+/***** ProductsAdminCreate.tsx *****/
+
+
+
+
+
+
+/***** ProductsAdminSearch.tsx *****/
+.products-admin-header .products-admin-header-search h3 {
+    text-align: center;
+    margin: 1rem 0;
+    font-size: 2.5rem;
+    color: orange;
+}
+.products-admin-header .products-admin-header-search form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+.products-admin-header-search form input {
+    height: 4rem;
+    width: 100%;
+    max-width: 40rem;
+    padding: .5rem 1.5rem .5rem 1rem;
+    border-radius: 1rem 0 0 1rem;
+    border: none;
+    box-shadow: 0 0 .7rem .1rem orange;
+    font-weight: bold;
+}
+.products-admin-header-search form button {
+    width: 5rem;
+    background-color: orange;
+    border-radius: 1rem;
+    padding: 1rem;
+    border: none;
+    margin-left: -1rem;
+    box-shadow: 0 0 .7rem .1rem rgba(0, 0, 0, 0.474);
+    cursor: pointer;
+    transition: filter .3s ease, box-shadow .3s ease;
+}
+.products-admin-header-search form button:hover {
+    filter: brightness(1.5);
+    box-shadow: 0 0 1rem .1rem orange;
+}
+
+/***** ProductsAdminOptions.tsx *****/
+.products-admin-header-options .products-admin-options-more {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin: 1rem auto;
+    max-width: 70rem;
+}
+.products-admin-options-more .products-admin-options-icon {
+    background-color: orange;
+    display: inline-block;
+    border-radius: 50%;
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: .6rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.493);
+    cursor: pointer;
+    align-self: flex-end;
+    transition: filter .3s ease;
+}
+.products-admin-options-more .products-admin-options-icon:hover {
+    filter: brightness(1.5);
+}
+.products-admin-options-more .products-admin-options-more-filters {
+    background-color: orange;
+    padding: 1rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.43);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 2rem;
+    justify-content: center;
+    width: fit-content;
+    align-self: flex-end;
+    margin: 1rem 0;
+    animation: openOptionsMore .5s alternate;
+    position: relative;
+}
+@keyframes openOptionsMore {
+    0% {
+        top: -2rem;
+        opacity: 0;
+    }
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+.products-admin-options-more-filters .prices-selected {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.products-admin-options-more-filters .prices-selected span {
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.products-admin-options-more-filters .prices-selected input {
+    border: .1rem solid black;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.358);
+    width: 90%;
+    max-width: 7rem;
+    padding: .2rem .5rem;
+    font-size: 1.8rem;
+}
+.products-admin-header-options .products-admin-main-options {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    max-width: 70rem;
+    margin: 0 auto;
+}
+.products-admin-main-options .products-admin-options-categories,
+.products-admin-main-options .products-admin-options-filters {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+    color: orange;
+}
+.products-admin-main-options .products-admin-options-categories select,
+.products-admin-main-options .products-admin-options-filters select {
+    font-weight: bold;
+    outline: none;
+}
+
+/***** ProductsAdminProducts.tsx *****/
+.products-admin-section-content .products-admin-footer-container {
+    background-color: orange;
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    padding: 2rem;
+} 
+.products-admin-footer-container .spinner {
+    width: 100%;
+    max-height: 20rem;
+}
+.products-admin-footer-container .not-products {
+    text-align: center;
+    font-weight: bold;
+}
+.products-admin-footer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+.products-admin-footer .card-product {
+    background-color: brown;
+    border-radius: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.464);
+    animation: cardAnimation .5s alternate;
+    position: relative;
+}
+@keyframes cardAnimation {
+    0% {
+        opacity: 0;
+        bottom: 2rem;
+    }
+    100% {
+        opacity: 1;
+        bottom: 0;
+    }
+}
+.products-admin-footer .card-product .card-product-image {
+    position: relative;
+    border-radius: 1rem;
+    border: .1rem solid burlywood;
+    overflow: hidden;
+    width: 100%;
+    height: 20rem;
+}
+.products-admin-footer .card-product .card-product-image .card-discount {
+    position: absolute;
+    background-color: green;
+    padding: .8rem;
+    border-radius: 1rem 1rem 1rem 0;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 0 0 1rem .1rem green;
+}
+.products-admin-footer .card-product .card-product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.products-admin-footer .card-product .card-product-data {
+    background-color: burlywood;
+    width: 100%;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: .1rem solid orange;
+}
+.products-admin-footer .card-product .card-product-data p {
+    font-weight: bold;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: .5rem;    
+    color: brown;
+}
+.card-product .card-product-data p span {
+    font-size: 1.5rem;
+    color: black;
+}
+.card-product .card-product-data p.card-id span {
+    font-size: 1.3rem;
+}
+.card-product .card-product-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: center;
+}
+.card-product-buttons button {
+    background-color: orange;
+    border: none;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 50%;
+    padding: 1rem;
+    cursor: pointer;
+    transition: filter .3s ease;
+}
+.card-product-buttons button:hover {
+    filter: brightness(1.5);
+}
+.card-product-buttons .delete-product {
+    background-color: red;
+    box-shadow: 0 0 1rem .1rem rgba(255, 0, 0, 0.487);
+}
+.card-product-buttons .edit-product {
+    background-color: burlywood;    
+    box-shadow: 0 0 1rem .1rem rgba(222, 184, 135, 0.62);
+}
+.card-product-buttons button img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

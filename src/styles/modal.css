@@ -1,0 +1,42 @@
+
+/***** MODAL COMPONENT ******/
+.modal-component-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.774);
+    z-index: 1800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: openModal .3s alternate;
+}
+@keyframes openModal {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.modal-component-container .modal-data {
+    background-color: brown;
+    border-radius: 1rem;
+    width: 95%;
+    height: 80%;
+    max-width: 80rem;
+    padding: 5rem 2rem 2rem 2rem;
+    position: relative;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+.modal-component-container .modal-data .close-modal {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+    width: 4rem;
+    height: 4rem;
+    cursor: pointer;
+}
