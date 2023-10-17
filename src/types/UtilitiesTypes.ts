@@ -44,3 +44,16 @@ export interface UseTakeProductsType {
     minPriceSelected: number,
     maxPriceSelected: number,
 }
+
+export interface CreateProductServiceType {
+    available: boolean,
+    category: string[],
+    description: string,
+    discountPercentage: number,
+    name: string,
+    images: File[],
+    price: number,
+    stock: number,
+    thumbnail: File,
+    setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+}

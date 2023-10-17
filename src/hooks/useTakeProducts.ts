@@ -23,8 +23,6 @@ export const useTakeProducts = (
     }, [selectedOrder, selectedCategory, searchData]);
     
     useEffect(() => {
-        if(allProducts.length === 0) return;
-
         const filterAllProducts = allProducts.filter(product => { 
             const productWithDiscount = product.price - (product.price * product.discountPercentage / 100);
             return (
@@ -69,10 +67,12 @@ export const useTakeProducts = (
             
             const productsData = await getDocs(q);
             const allData = productsData.docs.map((doc) => {
-                return {
-                    id: doc.id,
-                    ...doc.data()
-                } as ShoppProductType
+                if(doc.exists()){
+                    return {
+                        id: doc.id,
+                        ...doc.data()
+                    } as ShoppProductType
+                }
             });
             setAllProducts(allData);
         }catch(err){

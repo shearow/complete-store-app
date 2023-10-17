@@ -6,6 +6,7 @@ import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
 import { v4 } from "uuid";
 /********************* TYPESCRIPT TYPES *****************************************/
 import { CreateUserService, CreateUserDBService } from "../types/AuthServiceTypes"
+import { CreateProductServiceType } from "../types/UtilitiesTypes"
 /********************************************************************************/
 
 export const createUserService = async ( {email, displayName, password}: CreateUserService ) => {
@@ -109,14 +110,14 @@ export const createProductService = async ( {
     images,
     price,
     stock,
-    thumbnail
-} ) => {
+    thumbnail,
+    setIsLoading
+}: CreateProductServiceType ) => {
     const productRef = collection(db, "products");
 
-    let dataThumbnail: string;
-    let dataImages: string[] = [];
-
     try{
+        setIsLoading(true);
+
         await addDoc(productRef, {
             available,
             category,
@@ -128,49 +129,76 @@ export const createProductService = async ( {
         }).then(async createdProduct => {
 
             /* IF CATEGORY NOT EXIST, CREATE CATEGORY */
-            const itemRef = collection(db, "categories");
-
-            category.forEach(async categoryItem => {
-                const q = query(itemRef, where("category", "==", categoryItem)); 
-
-                await getDocs(q).then(async categoryData => {
-                    if(categoryData.empty){
-                        await addDoc(itemRef, {
-                            category: categoryItem
-                        });
-                    }
-                });
-            })
+            createCategoryService( {category} );
 
             /* CREATE THUMBNAIL IN STORAGE. */
-            const storageProductRef = ref(storage, `/products/${createdProduct.id}/thumbnail.jpg`);
+            const dataThumbnail = await createThumbnailInStorageService( {productId: createdProduct.id, thumbnail} );
 
-            await uploadBytes(storageProductRef, thumbnail).then(async fileData => {
-                await getDownloadURL(fileData.ref).then(data => {
-                    dataThumbnail = data;
-                });
-            });
-            
             /* CREATE IMAGES IN STORAGE */
-            for(let i=0; i < images.length; i++){
-                const storageProductRef2 = ref(storage, `/products/${createdProduct.id}/${v4()+v4()}.jpg`);
-
-                await uploadBytes(storageProductRef2, images[i]).then(async fileData => {
-                    await getDownloadURL(fileData.ref).then(data => {
-                        dataImages = [...dataImages, data];
-                    });
-                });
-            }
+            const dataImages = await createImagesInStorageService( {productId: createdProduct.id, images: images} );
             
             /* ADD IMAGES UPLOADEDS IN PRODUCT */
-            const productRef = doc(db, "products", createdProduct.id);
+            updateProductService( {
+                productId: createdProduct.id,
+                data: {
+                    thumbnail: dataThumbnail,
+                    images: dataImages
+                }
+            } );
 
-            await setDoc(productRef, {
-                thumbnail: dataThumbnail,
-                images: dataImages
-            }, {merge: true});
+            alert("The product was created successfully");
         });
     }catch(err){
-        console.log(err);
+        alert(`Unexpected error, try again or another time.`);
+    }finally{
+        setIsLoading(false);
     }
+}
+
+const createCategoryService = async ( {category}: {category: string[]} ) => {
+    const itemRef = collection(db, "categories");
+
+    category.forEach(async categoryItem => {
+        const q = query(itemRef, where("category", "==", categoryItem)); 
+        
+        await getDocs(q).then(async categoryData => {
+            if(categoryData.empty){
+                await addDoc(itemRef, {
+                    category: categoryItem
+                });
+            }
+        });
+    });
+}
+
+const createThumbnailInStorageService = async ( {productId, thumbnail}: {productId: string, thumbnail: File} ) => {
+    let dataThumbnail = "";
+    const storageProductRef = ref(storage, `/products/${productId}/thumbnail.jpg`);
+
+    await uploadBytes(storageProductRef, thumbnail).then(async fileData => {
+        await getDownloadURL(fileData.ref).then(data => {
+            dataThumbnail = data;
+        });
+    });
+    return dataThumbnail;
+}
+
+const createImagesInStorageService = async ( {productId, images}: {productId: string, images: File[]} ) => {
+    let dataImages: string[] = [];
+
+    for(let i=0; i < images.length; i++){
+        const storageProductRef2 = ref(storage, `/products/${productId}/${v4()+v4()}.jpg`);
+
+        await uploadBytes(storageProductRef2, images[i]).then(async fileData => {
+            await getDownloadURL(fileData.ref).then(data => {
+                dataImages = [...dataImages, data];
+            });
+        });
+    }
+    return dataImages;
+}
+
+const updateProductService = async ( {productId, data}: {productId: string, data: Object} ) => {
+    const productRef = doc(db, "products", productId);
+    await setDoc(productRef, data, {merge: true});
 }

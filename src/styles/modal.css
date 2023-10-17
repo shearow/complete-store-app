@@ -25,18 +25,22 @@
     background-color: brown;
     border-radius: 1rem;
     width: 95%;
-    height: 80%;
-    max-width: 80rem;
-    padding: 5rem 2rem 2rem 2rem;
+    max-width: 90rem;
+    max-height: 92%;
+    padding: 2rem;
     position: relative;
     overflow-y: auto;
     overflow-x: auto;
 }
 .modal-component-container .modal-data .close-modal {
     position: absolute;
-    right: 1rem;
-    top: 1rem;
-    width: 4rem;
-    height: 4rem;
+    right: 0;
+    top: 0;
+    width: 6rem;
+    height: 6rem;
     cursor: pointer;
+    padding: .8rem;
+    border-radius: 50%;
+    z-index: 700;
+    background-color: brown;
 }

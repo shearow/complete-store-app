@@ -1,5 +1,6 @@
 import { useState } from "react"
 import optionsIcon from "../../assets/icons/adminIcons/options-icon.svg"
+import { ALL_PRODUCTS } from "../../const/dataConst"
 import { ProductsAdminOptionsType } from "../../types/UtilitiesTypes"
 
 export const ProductsAdminOptions = ( 
@@ -45,6 +46,7 @@ export const ProductsAdminOptions = (
                     <h4>Category</h4>
 
                     <select value={selectedCategory} onChange={(e) => changeSelectedCategory({category: e.target.value})}>
+                        <option value={ALL_PRODUCTS}>{ALL_PRODUCTS}</option>
                         {allCategories.map( (category, index) => (
                             <option key={index} value={category}>{category}</option>
                         ))};

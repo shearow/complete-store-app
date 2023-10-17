@@ -146,9 +146,6 @@
     box-shadow: 0 0 1rem .1rem burlywood;
 }
 
-
-
-
 /***** ProductsAdmin.tsx *****/
 .products-admin-section-content {
     background-color: brown;
@@ -187,11 +184,84 @@
 }
 
 /***** ProductsAdminCreate.tsx *****/
-
-
-
-
-
+.products-admin-create {
+    background-color: orange;
+    padding: 2rem;
+    border-radius: 1rem;
+}
+.products-admin-create-title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+.products-admin-create .products-admin-create-data {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+    margin-bottom: .6rem;
+}
+.products-admin-create-data label,
+.products-admin-create-data.final-price {
+    font-weight: bold;
+}
+.products-admin-create-data input,
+.products-admin-create-data select,
+.products-admin-create-data textarea,
+.products-admin-create-data span {
+    outline: none;
+    padding: .2rem;
+    font-weight: bold;
+    color: brown;
+    max-width: 100%;
+}
+.products-admin-create-data textarea {
+    resize: none;
+    width: 100%;
+    height: 6rem;
+}
+.products-admin-create-data input[type=file],
+.products-admin-create .buttons .create-btn {
+    cursor: pointer;
+}
+.products-admin-create .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+.products-admin-create .buttons .create-btn {
+    border-radius: 1rem;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 2.5rem;
+    border: none;
+    width: 100%;
+    max-width: 30rem;
+    overflow: hidden;
+    height: 7rem;
+    transition: filter .3s ease, color .3s ease;
+}
+.products-admin-create .buttons .create-btn:hover {
+    filter: brightness(1.5);
+    box-shadow: 0 0 1rem .1rem black;
+    color: black;
+}
+.products-admin-create .buttons .create-btn-cancel {
+    background-color: rgb(180, 23, 23);
+    box-shadow: 0 0 1rem .1rem rgb(180, 23, 23);
+}
+.products-admin-create .buttons .create-btn-create {
+    background-color: green;
+    box-shadow: 0 0 1rem .1rem green;
+}
+.products-admin-create .buttons .create-btn-create .spinner {
+    height: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
 
 /***** ProductsAdminSearch.tsx *****/
 .products-admin-header .products-admin-header-search h3 {
