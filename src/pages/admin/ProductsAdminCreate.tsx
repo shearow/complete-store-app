@@ -168,7 +168,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
 
                     <div className="products-admin-create-data final-price">
                         <p>Final Price: 
-                            <span>$ {price - (price * discountPercentage / 100)}</span>
+                            <span>$ {(price - (price * discountPercentage / 100)).toFixed(2)}</span>
                         </p>
                     </div>
 

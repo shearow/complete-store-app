@@ -1,6 +1,6 @@
 import { auth, db, googleProvider, storage } from "../config/firebase"
 import { signOut, sendPasswordResetEmail, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword, User } from "firebase/auth"
-import { doc, getDocs, setDoc, updateDoc, query, where, collection, getDoc, addDoc } from "firebase/firestore"
+import { doc, getDocs, setDoc, updateDoc, query, where, collection, getDoc, addDoc, deleteDoc } from "firebase/firestore"
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
 import { v4 } from "uuid";
@@ -155,7 +155,7 @@ export const createProductService = async ( {
     }
 }
 
-const createCategoryService = async ( {category}: {category: string[]} ) => {
+export const createCategoryService = async ( {category}: {category: string[]} ) => {
     const itemRef = collection(db, "categories");
 
     category.forEach(async categoryItem => {
@@ -171,7 +171,7 @@ const createCategoryService = async ( {category}: {category: string[]} ) => {
     });
 }
 
-const createThumbnailInStorageService = async ( {productId, thumbnail}: {productId: string, thumbnail: File} ) => {
+export const createThumbnailInStorageService = async ( {productId, thumbnail}: {productId: string, thumbnail: File} ) => {
     let dataThumbnail = "";
     const storageProductRef = ref(storage, `/products/${productId}/thumbnail.jpg`);
 
@@ -183,7 +183,7 @@ const createThumbnailInStorageService = async ( {productId, thumbnail}: {product
     return dataThumbnail;
 }
 
-const createImagesInStorageService = async ( {productId, images}: {productId: string, images: File[]} ) => {
+export const createImagesInStorageService = async ( {productId, images}: {productId: string, images: File[]} ) => {
     let dataImages: string[] = [];
 
     for(let i=0; i < images.length; i++){
@@ -198,7 +198,13 @@ const createImagesInStorageService = async ( {productId, images}: {productId: st
     return dataImages;
 }
 
-const updateProductService = async ( {productId, data}: {productId: string, data: Object} ) => {
+export const updateProductService = async ( {productId, data}: {productId: string, data: Object} ) => {
     const productRef = doc(db, "products", productId);
     await setDoc(productRef, data, {merge: true});
+}
+
+export const deleteProductService = async ( {productId}: {productId: string} ) => {
+    const productRef = doc(db, "products", productId);
+
+    return await deleteDoc(productRef);
 }

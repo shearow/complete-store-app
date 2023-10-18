@@ -5,22 +5,8 @@ import { auth } from "../config/firebase"
 import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
 import { doc, onSnapshot } from "firebase/firestore"
 import { db } from "../config/firebase"
+import { UserOnlineType, UserContextType } from "../types/UtilitiesTypes"
 
-/********************* TYPESCRIPT TYPES *****************************************/
-interface UserOnline {
-    id: string,
-    displayName: string,
-    email: string,
-    imgURL: string,
-    role: string,
-    online: boolean
-}
-
-interface UserContextType {
-    userOnline: UserOnline,
-    removeUserOnline?: () => Promise<void>,
-}
-/*************************************************************/
 const initialUserOnline = {
     id: "",
     displayName: "",
@@ -36,14 +22,14 @@ export const UserContext = createContext<UserContextType>({userOnline: initialUs
 /************************************************************/
 /* Provider */
 export const UserProvider = ( {children}: {children: JSX.Element} ) => {
-    const [userOnline, setUserOnline] = useState<UserOnline>(initialUserOnline);
+    const [userOnline, setUserOnline] = useState<UserOnlineType>(initialUserOnline);
 
     useEffect(() => { 
         const unsub = onAuthStateChanged(auth, (user) => {
             if(user){
-                const userDataRef = doc(db, "users", user.uid)
+                const userDataRef = doc(db, "users", user.uid);
                 const unsub2 = onSnapshot(userDataRef, (doc) => {
-                    const {displayName, email, imgURL, role} = doc.data() as UserOnline;
+                    const {displayName, email, imgURL, role} = doc.data() as UserOnlineType;
 
                     setUserOnline({
                         id: doc.id,

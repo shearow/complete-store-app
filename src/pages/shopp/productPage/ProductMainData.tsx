@@ -26,7 +26,7 @@ export const ProductMainData = ( {product}: {product: ProductMainDataType} ) => 
                 <span className="product-price-not-descount">$ {product.price}</span> }
 
                 <div className="price-and-discount">
-                    <h4 className="product-price">${product.price - (product.price * product.discountPercentage / 100)}</h4>
+                    <h4 className="product-price">${(product.price - (product.price * product.discountPercentage / 100)).toFixed(2)}</h4>
                     { product.discountPercentage > 0 && 
                     <p className="product-discount">{product.discountPercentage}% OFF</p> }
                 </div>

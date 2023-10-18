@@ -20,7 +20,7 @@ export const ShoppProduct = ( {product}: {product: ShoppProductType} ) => {
                         ? "product-price product-price-discount" 
                         : "product-price"}
                     >
-                        ${product.price - (product.discountPercentage * product.price / 100)}
+                        ${(product.price - (product.discountPercentage * product.price / 100)).toFixed(2)}
                     </p>
                 </div>
             </Link>

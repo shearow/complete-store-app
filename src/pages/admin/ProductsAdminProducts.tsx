@@ -1,11 +1,18 @@
 import { Spinner } from "../../components/Spinner"
 import deleteIcon from "../../assets/icons/adminIcons/delete-icon.svg"
 import editIcon from "../../assets/icons/adminIcons/edit-icon.svg"
+import { deleteProductService } from "../../services/authService";
 import { ProductsAdminProductsType } from "../../types/UtilitiesTypes"
 
 export const ProductsAdminProducts = ( 
     {productsFiltered, loadingProducts, errorsProducts}: ProductsAdminProductsType
     ) => {
+
+    const deleteProduct = async ( {productId}: {productId: string} ) => {
+        Promise.all([
+            deleteProductService( {productId} )
+        ]).then((message) => console.log(message));
+    }
 
     return (
         <div className="products-admin-footer-container">
@@ -31,7 +38,7 @@ export const ProductsAdminProducts = (
                                         <span>{product.name}</span>
                                     </p>
                                     <p>final price:
-                                        <span>${product.price - (product.price * product.discountPercentage / 100)}</span>
+                                        <span>${(product.price - (product.price * product.discountPercentage / 100)).toFixed(2)}</span>
                                     </p>
                                     <p>stock:
                                         <span>{product.stock}</span>
@@ -50,7 +57,7 @@ export const ProductsAdminProducts = (
                                 </div>
 
                                 <div className="card-product-buttons">
-                                    <button className="delete-product">
+                                    <button className="delete-product" onClick={() => deleteProduct( {productId: product.id} )}>
                                         <img loading="lazy" src={deleteIcon} alt="delete product" />
                                     </button>
                                     <button className="edit-product">

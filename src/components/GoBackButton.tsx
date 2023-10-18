@@ -3,7 +3,7 @@ import { GoBackButtonType } from "../types/UtilitiesTypes"
 
 export const GoBackButton = ( {
     navigateTo = "/",
-    textProp = '👈 Go back',
+    textProp = '👈 Go Home',
     classNameProp = 'go-back-button'
 }: GoBackButtonType ) => {
 

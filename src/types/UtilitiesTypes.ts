@@ -1,5 +1,19 @@
 import { ShoppProductType } from "./ShoppTypes";
 
+export interface UserOnlineType {
+    id: string,
+    displayName: string,
+    email: string,
+    imgURL: string,
+    role: string,
+    online: boolean
+}
+
+export interface UserContextType {
+    userOnline: UserOnlineType,
+    removeUserOnline?: () => Promise<void>,
+}
+
 export interface GoBackButtonType {
     navigateTo?: string,
     textProp?: string,
