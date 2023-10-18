@@ -12,13 +12,12 @@ export const ProductsAdmin = () => {
     const [selectedOrder, setSelectedOrder] = useState("minPrice");
     const [minPriceSelected, setMinPriceSelected] = useState(INITIAL_MIN_PRICE);
     const [maxPriceSelected, setMaxPriceSelected] = useState(INITIAL_MAX_PRICE);
-    const { productsFiltered, loadingProducts, errorsProducts, takeProducts, allCategories } = useTakeProducts(
+    const { productsFiltered, loadingProducts, errorsProducts, allCategories } = useTakeProducts(
         {selectedCategory, selectedOrder, searchData, minPriceSelected, maxPriceSelected}
     )
 
     const changeSearchData = ( {dataSearch}: {dataSearch: string} ) => {
         setSearchData(dataSearch);
-        takeProducts();
     }
 
     const changeSelectedCategory = ( {category}: {category: string} ) => {

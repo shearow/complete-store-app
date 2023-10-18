@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore"
+import { collection, getDocs, orderBy, query, where, onSnapshot } from "firebase/firestore"
 import { db } from "../config/firebase"
 import { ALL_PRODUCTS } from "../const/dataConst"
 import { ShoppProductType } from "../types/ShoppTypes"
@@ -10,7 +10,7 @@ export const useTakeProducts = (
 ) => {
     const [allProducts, setAllProducts] = useState<ShoppProductType[]>([]);
     const [productsFiltered, setProductsFiltered] = useState<ShoppProductType[]>([]);     
-    const [loadingProducts, setLoadingProducts] = useState(false);
+    const [loadingProducts, setLoadingProducts] = useState(true);
     const [errorsProducts, setErrorsProducts] = useState<string | null>(null);            
     const [allCategories, setAllCategories] = useState([ALL_PRODUCTS]);
 
@@ -19,8 +19,36 @@ export const useTakeProducts = (
     }, []);
 
     useEffect(() => {
-        takeProducts();
-    }, [selectedOrder, selectedCategory, searchData]);
+        setLoadingProducts(true);
+    
+        const productsCollection = collection(db, "products");
+        let q;
+    
+        if (selectedOrder === "minPrice") {
+          q = selectedCategory === ALL_PRODUCTS
+            ? query(productsCollection, orderBy("price"))
+            : query(productsCollection, orderBy("price"), where("category", "array-contains", selectedCategory))
+        } else if (selectedOrder === "maxPrice") {
+          q = selectedCategory === ALL_PRODUCTS
+            ? query(productsCollection, orderBy("price", "desc"))
+            : query(productsCollection, orderBy("price", "desc"), where("category", "array-contains", selectedCategory))
+        }
+
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+          const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setAllProducts(data);
+          setLoadingProducts(false);
+          setErrorsProducts(null);
+        }, (error) => {
+          setLoadingProducts(false);
+          setErrorsProducts("Error: " + error.message);
+        });
+    
+        return () => { unsubscribe() };
+      }, [selectedOrder, selectedCategory, searchData]);
     
     useEffect(() => {
         const filterAllProducts = allProducts.filter(product => { 
@@ -47,47 +75,10 @@ export const useTakeProducts = (
         }
     }
 
-    const takeProducts = async () => {
-        if(loadingProducts) return;
-
-        try{
-            setLoadingProducts(true);
-            const productsCollection = collection(db, "products");
-            let q;
-
-            if(selectedOrder === "minPrice"){
-                q = selectedCategory === ALL_PRODUCTS 
-                    ? query(productsCollection, orderBy("price"))
-                    : query(productsCollection, orderBy("price"), where("category", "array-contains", selectedCategory))
-            } else if(selectedOrder === "maxPrice"){
-                q = selectedCategory === ALL_PRODUCTS 
-                    ? query(productsCollection, orderBy("price", "desc"))
-                    : query(productsCollection, orderBy("price", "desc"), where("category", "array-contains", selectedCategory))
-            }
-            
-            const productsData = await getDocs(q);
-            const allData = productsData.docs.map((doc) => {
-                if(doc.exists()){
-                    return {
-                        id: doc.id,
-                        ...doc.data()
-                    } as ShoppProductType
-                }
-            });
-            setAllProducts(allData);
-        }catch(err){
-            console.log(err)
-            setErrorsProducts("Han error has ocurred." + err);
-        }finally{
-            setLoadingProducts(false);
-        }
-    }
-
     return {
         productsFiltered,
         loadingProducts,
         errorsProducts,
-        takeProducts,
         allCategories,
     }
 }
