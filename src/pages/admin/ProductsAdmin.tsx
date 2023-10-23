@@ -70,6 +70,7 @@ export const ProductsAdmin = () => {
                     productsFiltered={productsFiltered}
                     loadingProducts={loadingProducts}
                     errorsProducts={errorsProducts}
+                    allCategories={allCategories}
                 />
             </div>
         </div>

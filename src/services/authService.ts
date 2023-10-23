@@ -1,7 +1,7 @@
 import { auth, db, googleProvider, storage } from "../config/firebase"
 import { signOut, sendPasswordResetEmail, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, updatePassword, User } from "firebase/auth"
 import { doc, getDocs, setDoc, updateDoc, query, where, collection, getDoc, addDoc, deleteDoc } from "firebase/firestore"
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"
+import { ref, uploadBytes, getDownloadURL, deleteObject, listAll } from "firebase/storage"
 import { URL_IMG_PROFILE_DEFAULT } from "../const/dataConst"
 import { v4 } from "uuid";
 /********************* TYPESCRIPT TYPES *****************************************/
@@ -203,8 +203,54 @@ export const updateProductService = async ( {productId, data}: {productId: strin
     await setDoc(productRef, data, {merge: true});
 }
 
-export const deleteProductService = async ( {productId}: {productId: string} ) => {
-    const productRef = doc(db, "products", productId);
+export const deleteCompleteProductService = async ( {productId, productCategory}: {productId: string, productCategory: string} ) => {
+    try{
+        console.log(productCategory)
+        await deleteProductService( {productId} ).then(async () => {
+            /* Delete all images of the deleted product in Storage */
+            const productRef = ref(storage, `products/${productId}`);
 
-    return await deleteDoc(productRef);
+            listAll(productRef).then((res) => {
+                res.items.forEach((itemRef) => {
+                    deleteProductImageService( {productId, imagePath: itemRef.name} );
+                });
+            }).catch((err) => {
+                console.log(err);
+            });
+
+            /* If the category does not exist in other products, delete it */
+            const productsRef = collection(db, "products");
+            const q = query(productsRef, where("category", "array-contains", productCategory[0]));
+            
+            await getDocs(q).then(async data => {
+                if(data.empty){
+                    deleteCategoryService( {categoryName: productCategory[0]} );
+                }
+            })
+        });
+    }catch(err){
+        console.log(err);
+    }
+}
+
+export const deleteProductService = async ( {productId}: {productId: string} ) => {
+    const productRef = doc(db, "products", productId);    
+    await deleteDoc(productRef);
+}
+
+export const deleteProductImageService = async ( {productId, imagePath}: {productId: string, imagePath: string} ) => {
+    const productRef = ref(storage, `products/${productId}/${imagePath}`);
+    await deleteObject(productRef);
+}
+
+export const deleteCategoryService = async ( {categoryName}: {categoryName: string} ) => {
+    const categoriesRef = collection(db, "categories");
+    const q = query(categoriesRef, where("category", "==", categoryName));
+
+    await getDocs(q).then(category => {
+        category.forEach(async data => {            
+            const categoryRef = doc(db, "categories", data.id);
+            await deleteDoc(categoryRef);
+        });
+    })
 }

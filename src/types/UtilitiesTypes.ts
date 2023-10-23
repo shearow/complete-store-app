@@ -49,6 +49,7 @@ export interface ProductsAdminProductsType {
     productsFiltered: ShoppProductType[],
     loadingProducts: boolean,
     errorsProducts: string | null,
+    allCategories: string[],
 }
 
 export interface UseTakeProductsType {
@@ -70,4 +71,16 @@ export interface CreateProductServiceType {
     stock: number,
     thumbnail: File,
     setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export interface ProductsAdminCardProductType {
+    product: ShoppProductType,
+    openModal: () => void,
+    takeProductToEditData: ({ product }: {product: ShoppProductType}) => void,
+}
+
+export interface ProductsAdminEditType {
+    closeModalProductEdit: () => void,
+    allCategories: string[],
+    product: ShoppProductType,
 }

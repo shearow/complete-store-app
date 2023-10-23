@@ -183,7 +183,7 @@
     text-transform: uppercase;
 }
 
-/***** ProductsAdminCreate.tsx *****/
+/***** ProductsAdminCreate.tsx and ProductsAdminEdit.tsx *****/
 .products-admin-create {
     background-color: orange;
     padding: 2rem;
@@ -261,6 +261,112 @@
     height: 100%;
     padding: 0;
     margin: 0 auto;
+}
+.products-admin-edit-thumbnail .products-admin-edit-thumbnail-content {
+    border: .1rem solid brown;
+    padding: .5rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 1rem .1rem rgba(0, 0, 0, 0.218);
+    background-color: brown;
+}
+.products-admin-edit-thumbnail-content img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
+}
+.products-admin-edit-thumbnail-content input {
+    display: none;
+}
+.products-admin-edit-thumbnail-content button {
+    padding: .5rem;
+    font-weight: bold;
+    border: none;
+    width: 100%;
+    cursor: pointer;
+}
+.products-admin-edit-images-content {
+    background-color: brown;
+    width: 100%;
+    padding: .5rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    overflow: hidden;
+}
+.products-admin-edit-images-content-header {
+    display: flex;
+    overflow-x: auto;
+}
+.products-admin-edit-images-content-header .no-images {
+    margin: 0 auto;
+    padding: 1rem;
+    font-weight: bold;
+    font-size: 2rem;
+    text-transform: uppercase;
+}
+.card-edit {
+    width: 15rem;
+    height: 15rem; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.products-admin-edit-images-content img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
+}
+.products-admin-edit-images-content .card-edit-image {
+    cursor: pointer;
+    position: relative;
+}
+.products-admin-edit-images-content .card-edit-image .delete-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(255, 0, 0, 0.691);
+    display: none;
+    pointer-events: none;
+    animation: hoverDelete .5s alternate;
+}
+@keyframes hoverDelete {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+.products-admin-edit-images-content .card-edit-image:hover .delete-hover {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.card-edit-image .delete-hover img {
+    height: 5rem;
+    width: 100%;
+}
+.card-edit-image .delete-hover p {
+    font-weight: bold;
+    font-size: 2rem;
+    text-transform: uppercase;
+    padding-top: .5rem;
+}
+.products-admin-edit-images-content input {
+    display: none;
+}
+.products-admin-edit-images-content .change-images-button {
+    width: fit-content;
+    padding: .5rem 2rem;
+    font-weight: bold;
+    border: none;
+    margin: 0 auto;
+    cursor: pointer;
 }
 
 /***** ProductsAdminSearch.tsx *****/

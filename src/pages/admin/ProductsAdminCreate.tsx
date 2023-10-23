@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import createIcon from "../../assets/icons/adminIcons/create-icon.svg"
 import { Modal } from "../../components/Modal"
 import { createProductService } from "../../services/authService"
@@ -10,8 +10,14 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
     const [productImages, setProductImages] = useState<File[]>([]);
     const [thumbnailImage, setThumbnailImage] = useState<File>();
     const [price, setPrice] = useState(0);
-    const [createCategory, setCreateCategory] = useState();
+    const [createCategory, setCreateCategory] = useState<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        if(allCategories.length === 0){
+            setCreateCategory("addCategory");
+        }
+    }, [createCategory]);
 
     const closeModal = () => {
         setModalIsActive(false);
@@ -23,7 +29,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
         setProductImages([]);
         setThumbnailImage(undefined);
         setPrice(0);
-        setCreateCategory(undefined);
+        setCreateCategory(null);
     }
 
     const changeThumbnailData = (e) => {
@@ -82,7 +88,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
         </button>
 
         { modalIsActive &&
-            <Modal closeModal={closeModal} >
+            <Modal closeModal={closeModal}>
                 <form className="products-admin-create" onSubmit={uploadProduct}>
                     <h3 className="products-admin-create-title">Create Product</h3>
 
