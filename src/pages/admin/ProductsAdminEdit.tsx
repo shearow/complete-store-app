@@ -2,32 +2,33 @@ import { useState, useEffect, useRef } from "react"
 import { Modal } from "../../components/Modal"
 import { Spinner } from "../../components/Spinner"
 import deleteIcon from "../../assets/icons/adminIcons/delete-icon.svg"
+import { editCompleteProductService } from "../../services/authService"
 import { ProductsAdminEditType } from "../../types/UtilitiesTypes"
 
 export const ProductsAdminEdit = ( 
     {closeModalProductEdit, allCategories, product}: ProductsAdminEditType 
     ) => {
     const [productData, setProductData] = useState( {
+        id: product?.id,
         name: product?.name,
         available: product?.available,
         price: product?.price,
         discountPercentage: product?.discountPercentage,
         description: product?.description,
         stock: product?.stock,
-        category: [product?.category],
-        thumbnail: product.thumbnail,
-        images: product.images
+        category: product?.category,
+        thumbnail: product?.thumbnail,
+        images: product?.images
     } );
     const thumbnailImageRef = useRef(null);
     const imagesRef = useRef(null);
-    const imagesToDelete = [];
     const [isLoading, setIsLoading] = useState(false);
     
     useEffect(() => {
         if(allCategories.length === 0){
             setProductData(prev => ({...prev, category: ["addCategory"]}));
         }
-    }, [productData.category]);
+    }, [allCategories]);
 
     const changeThumbnail = () => {
         thumbnailImageRef.current.click();
@@ -44,10 +45,30 @@ export const ProductsAdminEdit = (
         setProductData(prev => ({...prev, images: filteredImage}))
     }
 
-    const uploadProduct = (e) => {
+    const uploadProduct = async (e) => {
         e.preventDefault();
-        
-        console.log(productData);
+        if(isLoading) return;
+        setIsLoading(true);
+
+        let imagesToDelete: string[] = [];
+        product.images.forEach(image => {
+            if(!productData.images.includes(image)){
+                imagesToDelete.push(image);
+            }
+        });
+
+        const categoryData = productData.category[0] === "addCategory" 
+            ? [e.target.createNewCategory.value.toLowerCase()]
+            : [e.target.createCategory.value]
+
+        await editCompleteProductService( {
+            newData: {...productData, category: categoryData}, 
+            imagesToDelete, 
+            oldCategories: product.category
+        } );
+
+        setIsLoading(false);
+        closeModalProductEdit();
     }
 
     return (  
@@ -150,20 +171,29 @@ export const ProductsAdminEdit = (
                     </select>
 
                     {productData?.category[0] === "addCategory" && 
-                    <input type="text" placeholder="New Category" name="createNewCategory" required />
+                    <input 
+                        type="text" 
+                        placeholder="New Category" 
+                        name="createNewCategory"
+                        required 
+                    />
                     }
                 </div>
 
                 <div className="products-admin-create-data products-admin-edit-thumbnail">
                     <label htmlFor="editThumbnail">Principal Image:</label>
                     <div className="products-admin-edit-thumbnail-content">
-                        <img src={productData.thumbnail} loading="lazy" alt="thumbnail image" />
+                        <img 
+                            loading="lazy" 
+                            src={productData.thumbnail instanceof File ? URL.createObjectURL(productData.thumbnail) : productData.thumbnail} 
+                            alt="thumbnail image" 
+                        />
                         <input 
                             type="file"                            
                             ref={thumbnailImageRef}
-                            onChange={(e) => setProductData(prev => ({...prev, thumbnail: URL.createObjectURL(e?.target?.files[0])}))} 
+                            onChange={(e) => setProductData(prev => ({...prev, thumbnail: e?.target?.files[0]}))} 
                         />
-                        <button onClick={changeThumbnail}>Change Image</button>
+                        <button type="button" onClick={changeThumbnail}>Change Image</button>
                     </div>
                 </div>
 
@@ -173,9 +203,14 @@ export const ProductsAdminEdit = (
                         <div className="products-admin-edit-images-content-header">
                             { productData?.images?.length > 0 
                             ? productData?.images?.map( (image, index) => (
-                                <div className="card-edit">
+                                <div className="card-edit" key={index}>
                                     <div className="card-edit-image">
-                                        <img onClick={() => removeImage(index)} loading="lazy" key={index} src={image} alt="product images" />
+                                        <img 
+                                            onClick={() => removeImage(index)} 
+                                            loading="lazy"
+                                            src={image instanceof File ? URL.createObjectURL(image) : image} 
+                                            alt="product images"
+                                        />
                                         <div className="delete-hover">
                                             <img src={deleteIcon} alt="delete" />
                                             <p>Delete</p>
@@ -191,11 +226,12 @@ export const ProductsAdminEdit = (
                             type="file"
                             ref={imagesRef}
                             onChange={(e) => [...e?.target?.files].map(file => {
-                                setProductData(prev => ({...prev, images: [...prev.images, URL.createObjectURL(file)]}))
+                                setProductData(prev => ({...prev, images: [...prev.images, file]}))
                             })}
                             multiple 
                         />
                         <button 
+                            type="button"
                             className="change-images-button"
                             onClick={changeImages}
                         >
@@ -211,7 +247,7 @@ export const ProductsAdminEdit = (
                 </div>
 
                 <div className="buttons">
-                    <button className="create-btn create-btn-cancel" onClick={closeModalProductEdit}>Cancel</button>
+                    <button type="button" className="create-btn create-btn-cancel" onClick={closeModalProductEdit}>Cancel</button>
                     <button type="submit" className="create-btn create-btn-create">
                         {isLoading ? <Spinner /> : "Edit Product"}
                     </button>

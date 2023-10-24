@@ -1,7 +1,7 @@
 
 export interface ShoppProductType {
     available: boolean,
-    category: string,
+    category: string[],
     description: string,
     discountPercentage: number,
     images: string[],

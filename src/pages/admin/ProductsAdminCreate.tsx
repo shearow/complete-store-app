@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import createIcon from "../../assets/icons/adminIcons/create-icon.svg"
 import { Modal } from "../../components/Modal"
 import { createProductService } from "../../services/authService"
@@ -10,14 +10,8 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
     const [productImages, setProductImages] = useState<File[]>([]);
     const [thumbnailImage, setThumbnailImage] = useState<File>();
     const [price, setPrice] = useState(0);
-    const [createCategory, setCreateCategory] = useState<string | null>(null);
+    const [createCategory, setCreateCategory] = useState<string[]>(allCategories.length === 0 ? ["addCategory"] : [allCategories[0]]);
     const [isLoading, setIsLoading] = useState(false);
-
-    useEffect(() => {
-        if(allCategories.length === 0){
-            setCreateCategory("addCategory");
-        }
-    }, [createCategory]);
 
     const closeModal = () => {
         setModalIsActive(false);
@@ -29,7 +23,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
         setProductImages([]);
         setThumbnailImage(undefined);
         setPrice(0);
-        setCreateCategory(null);
+        setCreateCategory(allCategories.length === 0 ? ["addCategory"] : [allCategories[0]]);
     }
 
     const changeThumbnailData = (e) => {
@@ -61,13 +55,15 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
         e.preventDefault();
         if(isLoading) return;
 
-        const categoryData = createCategory === "addCategory" 
-            ? e.target.createNewCategory.value.toLowerCase()
-            : e.target.createCategory.value
-            
+        console.log(createCategory)
+
+        const categoryData = createCategory[0] === "addCategory" 
+            ? [e.target.createNewCategory.value.toLowerCase()]
+            : [e.target.createCategory.value]
+        
         await createProductService({
             available: e.target.createAvailable.value === "true" ? true : false,
-            category: [categoryData],
+            category: categoryData,
             description: e.target.createDescription.value,
             discountPercentage: Number(e.target.createDiscountPercentage.value),
             name: e.target.createName.value,
@@ -146,7 +142,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
                     <div className="products-admin-create-data">
                         <label htmlFor="createCategory">Category:</label>
                         <select
-                            onChange={(e) => setCreateCategory(e.target.value)}
+                            onChange={(e) => setCreateCategory([e.target.value])}
                             id="createCategory" 
                             name="createCategory" 
                             required 
@@ -157,7 +153,7 @@ export const ProductsAdminCreate = ( {allCategories}: {allCategories: string[]})
                             <option value="addCategory">Add Category</option>
                         </select>
 
-                        {createCategory === "addCategory" && 
+                        { (allCategories.length === 0 || createCategory[0] === "addCategory") && 
                         <input type="text" placeholder="New Category" name="createNewCategory" required />
                         }
                     </div>

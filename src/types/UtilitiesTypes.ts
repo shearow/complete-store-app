@@ -84,3 +84,9 @@ export interface ProductsAdminEditType {
     allCategories: string[],
     product: ShoppProductType,
 }
+
+export interface EditCompleteProductServiceType {
+    newData: ShoppProductType,
+    imagesToDelete: string[],
+    oldCategories: string[]
+}
