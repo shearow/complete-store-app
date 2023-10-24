@@ -12,7 +12,7 @@ export const useTakeProducts = (
     const [productsFiltered, setProductsFiltered] = useState<ShoppProductType[]>([]);     
     const [loadingProducts, setLoadingProducts] = useState(true);
     const [errorsProducts, setErrorsProducts] = useState<string | null>(null);            
-    const [allCategories, setAllCategories] = useState([ALL_PRODUCTS]);
+    const [allCategories, setAllCategories] = useState<string[]>([]);
 
     useEffect(() => {
         takeCategories();
