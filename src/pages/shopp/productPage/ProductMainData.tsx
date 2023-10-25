@@ -1,9 +1,10 @@
-import { useState } from "react"
-/********************* TYPESCRIPT TYPES *****************************************/
+import { useState, useContext } from "react"
+import { UserContext } from "../../../context/userContext"
 import { ProductMainDataType } from "../../../types/ShoppTypes"
 
 export const ProductMainData = ( {product}: {product: ProductMainDataType} ) => {
     const [stockCount, setStockCount] = useState(1);
+    const {userOnline} = useContext(UserContext);
 
     const reduceStockCount = () => {
         if(stockCount > 1){

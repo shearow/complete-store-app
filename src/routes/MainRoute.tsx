@@ -12,6 +12,7 @@ import { ShoppProductInfo } from "../pages/shopp/productPage/ShoppProductInfo"
 import { Error404 } from "./Error404"
 import { PrivateRoutes } from "./PrivateRoutes"
 import { PRIVATE_OPTION } from "../const/dataConst"
+import { CartPage } from "../pages/cart/CartPage"
 
 export const MainRoute = () => {
     return (
@@ -25,6 +26,7 @@ export const MainRoute = () => {
                     <Route path="/userprofile" element={<UserProfile />} />
                     <Route path="/userprofile/usereditprofile" element={<UserEditProfile />} />
                     <Route path="/userprofile/changeimage" element={<UserChangeImage />} />
+                    <Route path="/cart" element={<CartPage />} />
                 </Route>
                 <Route path="/terms" element={<TermsConditions />} />
                 <Route path="/recoverpassword" element={<RecoverPassword />} />

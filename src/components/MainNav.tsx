@@ -56,6 +56,7 @@ export const MainNav = () => {
                     { userOnline.online && userOnline.role === "admin" 
                     && <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/admin/menu">👑ADMIN</NavLink></li>
                     }
+                    <li><NavLink className={({isActive}) => isActive ? "active" : ""} to="/cart">Cart</NavLink></li>
                     <li onClick={removeUserOnline}>Logout</li>
                     </> }
                 </ul>

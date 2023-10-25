@@ -16,20 +16,22 @@ const initialUserOnline = {
     online: false
 }
 
+/************************************************************/
 /* Context */
-export const UserContext = createContext<UserContextType>({userOnline: initialUserOnline});
+export const UserContext = createContext<UserContextType>({userOnline: initialUserOnline, loadingUserAuth: true});
 
 /************************************************************/
 /* Provider */
 export const UserProvider = ( {children}: {children: JSX.Element} ) => {
     const [userOnline, setUserOnline] = useState<UserOnlineType>(initialUserOnline);
+    const [loadingUserAuth, setLoadingUserAuth] = useState(true);
 
     useEffect(() => { 
         const unsub = onAuthStateChanged(auth, (user) => {
             if(user){
                 const userDataRef = doc(db, "users", user.uid);
                 const unsub2 = onSnapshot(userDataRef, (doc) => {
-                    const {displayName, email, imgURL, role} = doc.data() as UserOnlineType;
+                    const {displayName, email, imgURL, role, cart} = doc.data() as UserOnlineType;
 
                     setUserOnline({
                         id: doc.id,
@@ -37,12 +39,15 @@ export const UserProvider = ( {children}: {children: JSX.Element} ) => {
                         email,
                         imgURL: imgURL || URL_IMG_PROFILE_DEFAULT,
                         role,
-                        online: true
+                        online: true,
+                        cart: cart || []
                     })
+                    setLoadingUserAuth(false);
                 })
                 return () => unsub2();
             }else {
                 removeUserOnline();
+                setLoadingUserAuth(false);
             }
         });
         return () => unsub();
@@ -58,7 +63,7 @@ export const UserProvider = ( {children}: {children: JSX.Element} ) => {
     };
 
     return (
-        <UserContext.Provider value={ { userOnline, removeUserOnline } } >
+        <UserContext.Provider value={ { userOnline, removeUserOnline, loadingUserAuth } } >
             { children }
         </UserContext.Provider>
     )

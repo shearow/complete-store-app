@@ -12,6 +12,7 @@ export interface UserOnlineType {
 export interface UserContextType {
     userOnline: UserOnlineType,
     removeUserOnline?: () => Promise<void>,
+    loadingUserAuth: boolean,
 }
 
 export interface GoBackButtonType {

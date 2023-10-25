@@ -4,7 +4,11 @@ import { Navigate, Outlet } from "react-router-dom"
 import { PRIVATE_OPTION } from "../const/dataConst"
 
 export const PrivateRoutes = ( {children = null, redirectTo = "/", option = PRIVATE_OPTION.onlyLogged} ) => {
-    const { userOnline } = useContext(UserContext);
+    const { userOnline, loadingUserAuth } = useContext(UserContext);
+
+    if(loadingUserAuth) {
+        return null; // Render nothing while user state is being resolved
+    }
 
     if(option === PRIVATE_OPTION.onlyLogged && !userOnline.online){
         return <Navigate to={redirectTo} />

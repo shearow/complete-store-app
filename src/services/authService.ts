@@ -277,9 +277,6 @@ export const editCompleteProductService = async (
         }
     }));
 
-    /* If new category not exist, create category in db */
-    createCategoryService( {category: newData.category} );
-
     /* If thumbnail Upload instanceof File, replace Thumbnail in storage with same name */
     if(newData.thumbnail instanceof File){
         createThumbnailInStorageService( {productId: newData.id, thumbnail: newData.thumbnail} );
@@ -307,6 +304,9 @@ export const editCompleteProductService = async (
             deleteCategoryService( {categoryName: category} );
         }
     });    
+
+    /* If new category not exist, create category in db */
+    await createCategoryService( {category: newData.category} );
 
     /* Delete images */
     imagesToDelete.forEach(image => {
